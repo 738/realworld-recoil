@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { AppLayout } from "~/components/layout";
+import { Header, Footer } from "~/components/base";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -11,7 +12,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Conduit</title>
       </Head>
       <AppLayout>
-        <Component {...pageProps} />
+        <>
+          <Header />
+          <Component {...pageProps} />
+          <Footer />
+        </>
       </AppLayout>
     </>
   );
