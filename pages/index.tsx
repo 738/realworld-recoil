@@ -1,27 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useRecoilValueLoadable } from 'recoil';
-import { ArticlePreview, Banner, FeedTab } from '~/components/atoms';
-import { aritcles } from '~/states';
-
-const Articles: React.FC = () => {
-  const articlesLoadable = useRecoilValueLoadable(aritcles);
-
-  switch (articlesLoadable.state) {
-    case 'hasValue':
-      return (
-        <>
-          {articlesLoadable.contents.articles.map((article) => (
-            <ArticlePreview key={article.slug} article={article} />
-          ))}
-        </>
-      );
-    case 'loading':
-      return <div>Loading...</div>;
-    case 'hasError':
-      throw articlesLoadable.contents;
-  }
-};
+import { Banner, FeedTab } from '~/components/atoms';
+import { ArticleList } from '~/components/blocks';
 
 const Home: NextPage = () => {
   return (
@@ -36,7 +16,7 @@ const Home: NextPage = () => {
           <div className="row">
             <div className="col-md-9">
               <FeedTab />
-              <Articles />
+              <ArticleList />
             </div>
 
             <div className="col-md-3">

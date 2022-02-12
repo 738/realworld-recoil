@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { selector } from 'recoil';
-import { MultipleArticlesResponse } from '~/components/atoms';
+import { MultipleArticlesResponse } from '~/@types/Article';
 
-export const aritcles = selector<MultipleArticlesResponse>({
-  key: 'articles',
+export const $aritcleList = selector<MultipleArticlesResponse>({
+  key: 'articleListKey',
   get: async () => {
     try {
       const response = await axios.get('/api/articles');

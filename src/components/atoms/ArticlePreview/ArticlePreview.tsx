@@ -1,9 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { components } from '~/@types';
-
-export type Article = components['schemas']['Article'];
-export type MultipleArticlesResponse = components['schemas']['MultipleArticlesResponse'];
+import { Article } from '~/@types/Article';
 
 interface Props {
   article: Article;
