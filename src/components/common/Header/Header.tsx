@@ -1,4 +1,9 @@
+import { useRecoilValue } from 'recoil';
+import { $isLogined } from '~/stores/User.store';
+
 export const Header = () => {
+  const isLogined = useRecoilValue($isLogined);
+
   return (
     <nav className="navbar navbar-light">
       <div className="container">
@@ -11,16 +16,20 @@ export const Header = () => {
               Home
             </a>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="">
-              <i className="ion-compose"></i>&nbsp;New Article
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="">
-              <i className="ion-gear-a"></i>&nbsp;Settings
-            </a>
-          </li>
+          {isLogined && (
+            <>
+              <li className="nav-item">
+                <a className="nav-link" href="">
+                  <i className="ion-compose"></i>&nbsp;New Article
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="">
+                  <i className="ion-gear-a"></i>&nbsp;Settings
+                </a>
+              </li>
+            </>
+          )}
           <li className="nav-item">
             <a className="nav-link" href="">
               Sign in
