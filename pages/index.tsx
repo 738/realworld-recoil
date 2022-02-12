@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRecoilValueLoadable } from 'recoil';
-import { ArticlePreview, Banner, FeedTab } from '~/components/base';
+import { ArticlePreview, Banner, FeedTab } from '~/components/atoms';
 import { aritcles } from '~/states';
 
 const Articles: React.FC = () => {

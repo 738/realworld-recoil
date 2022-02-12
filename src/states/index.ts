@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { selector } from 'recoil';
-import { MultipleArticlesResponse } from '~/components/base/ArticlePreview';
+import { MultipleArticlesResponse } from '~/components/atoms';
 
 export const aritcles = selector<MultipleArticlesResponse>({
   key: 'articles',
