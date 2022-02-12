@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { Banner, FeedTab } from '~/components/home';
 import { ArticleList } from '~/components/article';
 import { TagList } from '~/components/tag';
-import { $isLogined } from '~/stores/User.store';
+import { $isLogined } from '~/stores';
 
 const Home: NextPage = () => {
   const isLogined = useRecoilValue($isLogined);

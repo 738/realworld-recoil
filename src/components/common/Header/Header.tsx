@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { $isLogined } from '~/stores/User.store';
+import { $isLogined } from '~/stores';
 
 export const Header = () => {
   const isLogined = useRecoilValue($isLogined);

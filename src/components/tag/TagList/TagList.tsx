@@ -1,17 +1,24 @@
-import { useRecoilValueLoadable } from 'recoil';
+import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import { Tag } from '..';
-import { $tagList } from '~/stores';
+import { $selectedTag, $tagList } from '~/stores';
 
 export const TagList: React.FC = () => {
   const tagListLoadable = useRecoilValueLoadable($tagList);
+  const setSelectedTag = useSetRecoilState($selectedTag);
 
   switch (tagListLoadable.state) {
     case 'hasValue':
       return (
         <TagListContainer>
-          {tagListLoadable.contents.tags.map((tag) => (
-            <Tag key={tag} label={tag} />
-          ))}
+          {tagListLoadable.contents.tags?.map((tag) => (
+            <Tag
+              key={tag}
+              label={tag}
+              onClick={() => {
+                setSelectedTag(tag);
+              }}
+            />
+          )) ?? null}
         </TagListContainer>
       );
     case 'loading':

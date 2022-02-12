@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { selector } from 'recoil';
+import { atom, selector } from 'recoil';
 import { TagsResponse } from '~/@types/Tag';
 
 export const $tagList = selector<TagsResponse>({
@@ -12,4 +12,9 @@ export const $tagList = selector<TagsResponse>({
       return [];
     }
   },
+});
+
+export const $selectedTag = atom<string | undefined>({
+  key: 'selectedTagKey',
+  default: undefined,
 });

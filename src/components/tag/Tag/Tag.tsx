@@ -1,13 +1,14 @@
-import Link from 'next/link';
+import React from 'react';
 
 interface Props {
   label: string;
+  onClick: () => void;
 }
 
-export const Tag = ({ label }: Props) => {
+export const Tag = ({ label, onClick }: Props) => {
   return (
-    <a href="" className="tag-pill tag-default">
+    <div className="tag-pill tag-default" onClick={onClick}>
       {label}
-    </a>
+    </div>
   );
 };

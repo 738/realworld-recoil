@@ -8,11 +8,7 @@ export const ArticleList: React.FC = () => {
   switch (articleListLoadable.state) {
     case 'hasValue':
       return (
-        <>
-          {articleListLoadable.contents.articles.map((article) => (
-            <ArticlePreview key={article.slug} article={article} />
-          ))}
-        </>
+        <>{articleListLoadable.contents.articles?.map((article) => <ArticlePreview key={article.slug} article={article} />) ?? null}</>
       );
     case 'loading':
       return <div>Loading...</div>;
