@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { Article } from '~/@types/Article';
 
 interface Props {
@@ -10,14 +9,14 @@ export const ArticlePreview = ({ article }: Props) => {
   return (
     <div className="article-preview">
       <div className="article-meta">
-        <Link href="profile.html" passHref>
-          <Image alt="author-image" src={article.author.image} width="32" height="32" />
-        </Link>
+        <a href="profile.html">
+          <img alt="author-image" src={article.author.image} width="32" height="32" />
+        </a>
         <div className="info">
-          <Link href="" passHref>
-            <span className="author">{article.author.username}</span>
-          </Link>
-          <span className="date">{article.createdAt}</span>
+          <a href="" className="author">
+            {article.author.username}
+          </a>
+          <span className="date">{new Date(article.createdAt).toDateString()}</span>
         </div>
         <button className="btn btn-outline-primary btn-sm pull-xs-right">
           <i className="ion-heart"></i> {article.favoritesCount}
