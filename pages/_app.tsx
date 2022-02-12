@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { AppLayout } from '~/components/layout';
-import { Header, Footer } from '~/components/atoms';
+import { Header, Footer } from '~/components/common';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
