@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { RecoilRoot } from 'recoil';
 
 interface Props {
-  children: React.ReactElement;
+  children: React.ReactNode;
 }
 
 const queryClient = new QueryClient();

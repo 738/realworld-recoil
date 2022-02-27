@@ -12,11 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Conduit</title>
       </Head>
       <AppLayout>
-        <>
-          <Header />
-          <Component {...pageProps} />
-          <Footer />
-        </>
+        <Header />
+        <Component {...pageProps} />
+        <Footer />
       </AppLayout>
     </>
   );
