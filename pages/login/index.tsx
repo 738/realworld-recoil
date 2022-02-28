@@ -1,6 +1,24 @@
+import axios from 'axios';
 import type { NextPage } from 'next';
+import Link from 'next/link';
+import { useMutation } from 'react-query';
+import { useForm } from 'react-hook-form';
+
+import { LoginUser, UserResponse } from '~/@types/User';
+import { ErrorResponse } from '~/@types/Error';
+import { useErrorMessages } from '~/hooks';
 
 const Login: NextPage = () => {
+  const { register, handleSubmit } = useForm<LoginUser>();
+  const mutation = useMutation<UserResponse, ErrorResponse, LoginUser>((user) => {
+    return axios.post('/api/users/login', { user });
+  });
+  const onSubmit = handleSubmit((data) => {
+    mutation.mutate(data);
+  });
+
+  const { errorMessages } = useErrorMessages(mutation.error);
+
   return (
     <div>
       <div className="auth-page">
@@ -9,19 +27,19 @@ const Login: NextPage = () => {
             <div className="col-md-6 offset-md-3 col-xs-12">
               <h1 className="text-xs-center">Sign in</h1>
               <p className="text-xs-center">
-                <a href="">Need an account?</a>
+                <Link href="/register">
+                  <a href="">Need an account?</a>
+                </Link>
               </p>
 
-              {/* <ul className="error-messages">
-                <li>That email is already taken</li>
-              </ul> */}
+              {errorMessages}
 
-              <form>
+              <form onSubmit={onSubmit}>
                 <fieldset className="form-group">
-                  <input className="form-control form-control-lg" type="text" placeholder="Email" />
+                  <input className="form-control form-control-lg" type="text" placeholder="Email" {...register('email')} />
                 </fieldset>
                 <fieldset className="form-group">
-                  <input className="form-control form-control-lg" type="password" placeholder="Password" />
+                  <input className="form-control form-control-lg" type="password" placeholder="Password" {...register('password')} />
                 </fieldset>
                 <button className="btn btn-lg btn-primary pull-xs-right">Sign in</button>
               </form>
