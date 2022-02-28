@@ -3,8 +3,10 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useMutation } from 'react-query';
 import { useForm } from 'react-hook-form';
+
 import { NewUser, UserResponse } from '~/@types/User';
 import { ErrorResponse } from '~/@types/Error';
+import { useErrorMessages } from '~/hooks';
 
 const Register: NextPage = () => {
   const { register, handleSubmit } = useForm<NewUser>();
@@ -15,7 +17,7 @@ const Register: NextPage = () => {
     mutation.mutate(data);
   });
 
-  const errors = mutation.error?.response?.data.errors;
+  const { errorMessages } = useErrorMessages(mutation.error);
 
   return (
     <div>
@@ -30,13 +32,7 @@ const Register: NextPage = () => {
                 </Link>
               </p>
 
-              {errors && (
-                <ul className="error-messages">
-                  {Object.keys(errors).map((entity) => {
-                    return <li key={entity}>That {entity} is already taken</li>;
-                  })}
-                </ul>
-              )}
+              {errorMessages}
 
               <form onSubmit={onSubmit}>
                 <fieldset className="form-group">
