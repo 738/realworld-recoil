@@ -1,28 +1,30 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
 import { useForm } from 'react-hook-form';
+import { useCookie } from 'react-use';
+import { useSetRecoilState } from 'recoil';
 
 import { LoginUser, UserResponse } from '~/@types/User';
 import { ErrorResponse } from '~/@types/Error';
 import { useErrorMessages } from '~/hooks';
-import { useRouter } from 'next/router';
-import { useSetRecoilState } from 'recoil';
 import { $user } from '~/stores';
 
 const Login: NextPage = () => {
   const router = useRouter();
   const setUser = useSetRecoilState($user);
   const { register, handleSubmit } = useForm<LoginUser>();
+  const [, updateToken] = useCookie('jwt');
   const mutation = useMutation<{ data: UserResponse }, ErrorResponse, LoginUser>(
     (user) => {
       return axios.post('/api/users/login', { user });
     },
     {
-      onSuccess: (result, variables, context) => {
+      onSuccess: (result) => {
         setUser(result.data.user);
-        // TODO: 쿠키에 토큰 세팅
+        updateToken(result.data.user.token);
         router.push('/');
       },
     },
