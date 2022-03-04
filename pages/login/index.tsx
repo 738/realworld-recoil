@@ -7,12 +7,26 @@ import { useForm } from 'react-hook-form';
 import { LoginUser, UserResponse } from '~/@types/User';
 import { ErrorResponse } from '~/@types/Error';
 import { useErrorMessages } from '~/hooks';
+import { useRouter } from 'next/router';
+import { useSetRecoilState } from 'recoil';
+import { $user } from '~/stores';
 
 const Login: NextPage = () => {
+  const router = useRouter();
+  const setUser = useSetRecoilState($user);
   const { register, handleSubmit } = useForm<LoginUser>();
-  const mutation = useMutation<UserResponse, ErrorResponse, LoginUser>((user) => {
-    return axios.post('/api/users/login', { user });
-  });
+  const mutation = useMutation<{ data: UserResponse }, ErrorResponse, LoginUser>(
+    (user) => {
+      return axios.post('/api/users/login', { user });
+    },
+    {
+      onSuccess: (result, variables, context) => {
+        setUser(result.data.user);
+        // TODO: 쿠키에 토큰 세팅
+        router.push('/');
+      },
+    },
+  );
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data);
   });
