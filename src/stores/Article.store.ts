@@ -20,6 +20,6 @@ export const $aritcleList = selector<MultipleArticlesResponse>({
 });
 
 export const $articleOffset = atom<number>({
-  key: 'articlePageKey',
+  key: 'articleOffsetKey',
   default: 0,
 });
