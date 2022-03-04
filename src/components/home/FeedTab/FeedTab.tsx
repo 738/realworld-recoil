@@ -1,9 +1,10 @@
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import classNames from 'classnames';
-import { $isLogined, $selectedTag } from '~/stores';
+import { $selectedTag } from '~/stores';
+import { useAuth } from '~/hooks';
 
 export const FeedTab = () => {
-  const isLogined = useRecoilValue($isLogined);
+  const { isLogined } = useAuth();
   const [selectedTag, setSelectedTag] = useRecoilState($selectedTag);
 
   const handleGlobalFeedClick = () => {

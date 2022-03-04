@@ -2,6 +2,7 @@ import axios from 'axios';
 import { QueryClient, QueryClientProvider, QueryFunctionContext } from 'react-query';
 import { RecoilRoot } from 'recoil';
 import Cookies from 'js-cookie';
+import { AuthProvider } from '~/components/provider';
 
 interface Props {
   children: React.ReactNode;
@@ -27,7 +28,9 @@ const queryClient = new QueryClient({
 export const AppLayout = ({ children }: Props) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <RecoilRoot>{children}</RecoilRoot>
+      <RecoilRoot>
+        <AuthProvider>{children}</AuthProvider>
+      </RecoilRoot>
     </QueryClientProvider>
   );
 };

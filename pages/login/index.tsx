@@ -4,31 +4,28 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
 import { useForm } from 'react-hook-form';
-import { useCookie } from 'react-use';
-import { useSetRecoilState } from 'recoil';
 
 import { LoginUser, UserResponse } from '~/@types/User';
 import { ErrorResponse } from '~/@types/Error';
-import { useErrorMessages } from '~/hooks';
-import { $user } from '~/stores';
+import { useAuth, useErrorMessages } from '~/hooks';
 
 const Login: NextPage = () => {
   const router = useRouter();
-  const setUser = useSetRecoilState($user);
   const { register, handleSubmit } = useForm<LoginUser>();
-  const [, updateToken] = useCookie('jwt');
+  const { login } = useAuth();
+
   const mutation = useMutation<{ data: UserResponse }, ErrorResponse, LoginUser>(
     (user) => {
       return axios.post('/api/users/login', { user });
     },
     {
       onSuccess: (result) => {
-        setUser(result.data.user);
-        updateToken(result.data.user.token);
+        login(result.data.user);
         router.push('/');
       },
     },
   );
+
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data);
   });

@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import { useRecoilValue } from 'recoil';
-import { $isLogined } from '~/stores';
+import { useAuth } from '~/hooks';
 
 export const Header = () => {
-  const isLogined = useRecoilValue($isLogined);
+  const { isLogined, logout } = useAuth();
 
   return (
     <nav className="navbar navbar-light">
@@ -32,6 +31,9 @@ export const Header = () => {
                     <i className="ion-gear-a"></i>&nbsp;Settings
                   </a>
                 </Link>
+              </li>
+              <li className="nav-item">
+                <button onClick={logout}>Logout</button>
               </li>
             </>
           )}
