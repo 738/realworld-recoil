@@ -11,16 +11,16 @@ import { useAuth, useErrorMessages } from '~/hooks';
 
 const Login: NextPage = () => {
   const router = useRouter();
-  const { register, handleSubmit } = useForm<LoginUser>();
   const { login } = useAuth();
+  const { register, handleSubmit } = useForm<LoginUser>();
 
   const mutation = useMutation<{ data: UserResponse }, ErrorResponse, LoginUser>(
     (user) => {
       return axios.post('/api/users/login', { user });
     },
     {
-      onSuccess: (result) => {
-        login(result.data.user);
+      onSuccess: ({ data }) => {
+        login(data.user);
         router.push('/');
       },
     },

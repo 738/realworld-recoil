@@ -1,18 +1,31 @@
 import axios from 'axios';
 import type { NextPage } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useMutation } from 'react-query';
 import { useForm } from 'react-hook-form';
 
 import { NewUser, UserResponse } from '~/@types/User';
 import { ErrorResponse } from '~/@types/Error';
-import { useErrorMessages } from '~/hooks';
+import { useAuth, useErrorMessages } from '~/hooks';
 
 const Register: NextPage = () => {
+  const router = useRouter();
+  const { login } = useAuth();
   const { register, handleSubmit } = useForm<NewUser>();
-  const mutation = useMutation<UserResponse, ErrorResponse, NewUser>((user) => {
-    return axios.post('/api/users', { user });
-  });
+
+  const mutation = useMutation<{ data: UserResponse }, ErrorResponse, NewUser>(
+    (user) => {
+      return axios.post('/api/users', { user });
+    },
+    {
+      onSuccess: ({ data }) => {
+        login(data.user);
+        router.push('/');
+      },
+    },
+  );
+
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data);
   });
